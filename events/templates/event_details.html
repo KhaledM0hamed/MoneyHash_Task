@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %} {{ event.title }} {% endblock%} 
+
+{% block content %}
+
+    <div class="container container shadow p-3 mb-3 bg-white rounded">
+        
+        <div class="row">
+        <h6 class="text-secondary col-md-6" style="text-transform: uppercase; display: inline;">
+            {{event.author}} - {{event.date}}
+        </h6>
+
+        <h6 class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
+            participants: &nbsp;654
+        </h6>
+        <hr />
+
+        <div class="card-body">
+            <h3 class="card-title">
+                <a class="text-dark" href="{% url 'event-details' event.pk %}"
+                    >{{ event.title }}</a
+                >
+            </h3>
+            <br>
+            <p class="card-text">{{ event.description }}</p>
+        </div>
+        
+        {% if event.is_past_due %}
+        <div class=" card-body justify-content-center " disabled style="text-align: center">
+            <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
+        </div>
+        {% else %}
+        <div class=" card-body justify-content-center" style="text-align: center">
+            <a href="#" class="btn btn-dark">ATTEND NOW </a>
+            <br>
+            <a class="text-dark" href="{% url 'update-event' event.pk %}">UPDATE EVENT</a>
+        </div>
+        {% endif %}
+        
+    </div>
+
+{% endblock %}

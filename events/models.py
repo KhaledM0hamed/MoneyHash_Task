@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from datetime import date 
 # Create your models here.
 
 class Event(models.Model):
@@ -15,3 +17,10 @@ class Event(models.Model):
             'description': self.description,
             'date': self.date
         }
+
+    def get_absolute_url(self):
+        return reverse("event-details", args=(str(self.id)))
+    
+    @property
+    def is_past_due(self):
+        return date.today() > self.date

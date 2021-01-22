@@ -1,1 +1,88 @@
-<h1>Hello World!</h1>
+{% extends 'base.html' %} {% block content %}
+
+<h1>All Event</h1>
+<br />
+{% for event in object_list %}
+<div class="container shadow p-3 mb-3 bg-white rounded">
+    <div class="row">
+        <div class="card-body col-md-8">
+            <h3 class="card-title">
+                <a class="text-dark" href="{% url 'event-details' event.pk %}"
+                    >{{ event.title }}</a
+                >
+            </h3>
+            <p
+                class="card-text"
+                style="
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2; /* number of lines to show */
+                    -webkit-box-orient: vertical;
+                "
+            >
+                {{ event.description }}
+            </p>
+        </div>
+        {% if event.is_past_due %}
+            <div class=" card-body col-md-4 " disabled style="text-align: right">
+                <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
+            </div>
+        {% else %}
+            <div class=" card-body col-md-4" style="text-align: right">
+                <a href="#" class="btn btn-dark">ATTEND NOW </a>
+            </div>
+        {% endif %}
+
+    </div>
+    <hr />
+    <div class="row">
+        <h6 class="text-secondary col-md-6" style="text-transform: uppercase; display: inline;">
+            {{event.author}} - {{event.date}}
+        </h6>
+
+        <h6 class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
+            participants: &nbsp;654
+        </h6>
+
+    </div>
+</div>
+{% endfor %}
+
+<div class="pagination justify-content-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+        <button class="btn btn-dark">
+            <a class="text-light" href="?page=1">&laquo; first</a>
+        </button>
+        <button class="btn btn-dark">
+            <a
+                class="text-light"
+                href="?page={{ page_obj.previous_page_number }}"
+                >previous</a
+            >
+        </button>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <button class="btn btn-dark">
+            <a class="text-light" href="?page={{ page_obj.next_page_number }}"
+                >next</a
+            >
+        </button>
+        <button class="btn btn-dark">
+            <a
+                class="text-light"
+                href="?page={{ page_obj.paginator.num_pages }}"
+                >last &raquo;</a
+            >
+        </button>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock %}
