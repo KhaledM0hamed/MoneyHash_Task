@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'events',
-    'members'
+    'members',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -126,4 +127,5 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 
-AUTH_USER_MODEL = 'members.CustomUser' # new
+AUTH_USER_MODEL = 'members.CustomUser' 
+AUTHENTICATION_BACKENDS = ['members.backends.EmailBackend'] 

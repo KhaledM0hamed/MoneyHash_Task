@@ -31,9 +31,16 @@
                 <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
             </div>
         {% else %}
-            <div class=" card-body col-md-4" style="text-align: right">
-                <a href="#" class="btn btn-dark">ATTEND NOW </a>
-            </div>
+            {% if user in event.participants.all %}
+                <div class=" card-body col-md-4" style="text-align: right">
+                    <a href="#" class="btn btn-warning">WITHDRAW</a>
+                </div>
+            {% else %}
+                <div class=" card-body col-md-4" style="text-align: right">
+                    <a href="#" class="btn btn-dark">ATTEND NOW </a>
+                </div>
+            {% endif %}
+
         {% endif %}
 
     </div>
@@ -44,7 +51,7 @@
         </h6>
 
         <h6 class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
-            participants: &nbsp;654
+            participants: &nbsp;{{event.participants.all.count}}
         </h6>
 
     </div>

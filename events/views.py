@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Event
 from .forms import EventForm, EventEditForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # # Create your views here.
 # def home(request):
 #     context = {}
@@ -17,12 +19,18 @@ class EventDetailView(DetailView):
     model = Event
     template_name = 'event_details.html'
 
-class AddEventView(CreateView):
+class AddEventView(LoginRequiredMixin, CreateView):
     model = Event
     form_class = EventForm
     template_name = 'add_event.html'
+    login_url = '/members/login'
 
-class UpdateEventView(UpdateView):
+    
+
+class UpdateEventView(LoginRequiredMixin, UpdateView):
     model = Event
     template_name = 'update_event.html'
     form_class = EventEditForm
+    login_url = '/members/login'
+
+
