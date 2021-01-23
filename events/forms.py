@@ -8,9 +8,9 @@ class EventForm(forms.ModelForm):
 
         widgets= {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'author': forms.Select(attrs={'class': 'form-control'}),
+            'author': forms.TextInput(attrs={'class': 'form-control', 'id': 'authorField', 'type': 'hidden'}),
             'description': forms.Textarea   (attrs={'class': 'form-control'}),
-            'date': forms.TextInput(attrs={'class': 'form-control'}),
+            'date': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ex: 2021-01-23'}),
         }
 
 class EventEditForm(forms.ModelForm):
@@ -20,6 +20,6 @@ class EventEditForm(forms.ModelForm):
 
         widgets= {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea   (attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
             'date': forms.TextInput(attrs={'class': 'form-control'}),
         }

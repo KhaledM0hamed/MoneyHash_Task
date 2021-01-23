@@ -19,8 +19,8 @@ class Event(models.Model):
         }
 
     def get_absolute_url(self):
-        return reverse("event-details", args=(str(self.id)))
+        return reverse("event-details", args=[self.id])
     
     @property
     def is_past_due(self):
-        return date.today() > self.date
+        return date.today() > self.date    

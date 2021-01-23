@@ -33,7 +33,9 @@
         <div class=" card-body justify-content-center" style="text-align: center">
             <a href="#" class="btn btn-dark">ATTEND NOW </a>
             <br>
+            {% if event.author.username == user.username %}
             <a class="text-dark" href="{% url 'update-event' event.pk %}">UPDATE EVENT</a>
+            {% endif %}
         </div>
         {% endif %}
         
