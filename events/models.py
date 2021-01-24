@@ -11,7 +11,7 @@ User = settings.AUTH_USER_MODEL
 class Event(models.Model):
     title = models.CharField(max_length=255, blank=False, null=False)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='+')
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     date = models.DateField(auto_now=False, auto_now_add=False, null=False, blank=False)
     participants = models.ManyToManyField(User, blank=True)
 
@@ -28,5 +28,10 @@ class Event(models.Model):
     
     @property
     def is_past_due(self):
-        return date.today() > self.date    
+        return date.today() > self.date   
+
+    @property
+    def email_username(self):
+        username = self.author.email.split('@')[0]
+        return username
 

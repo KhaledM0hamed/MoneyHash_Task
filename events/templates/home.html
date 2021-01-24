@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% block content %}
 
 <h1>All Event</h1>
+<hr>
 <br />
 {% for event in object_list %}
 <!-- We can remove this upcoming 'if' if we want to list all events  -->
@@ -31,15 +32,24 @@
                 <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
             </div>
         {% else %}
-            {% if user in event.participants.all %}
-                <div class=" card-body col-md-4" style="text-align: right">
-                    <a href="#" class="btn btn-warning">WITHDRAW</a>
-                </div>
+
+            {% if not user.is_authenticated %}
+            <div class=" card-body col-md-4 " disabled style="text-align: right">
+                <button class="btn btn-secondary"disabled>LOGIN FIRST</button>
+            </div>
             {% else %}
-                <div class=" card-body col-md-4" style="text-align: right">
-                    <a href="#" class="btn btn-dark">ATTEND NOW </a>
-                </div>
+                {% if user in event.participants.all %}
+                    <div data-action="withdraw" data-user_id="{{user.id}}" data-event_id="{{event.id}}" class="attend_btn card-body col-md-4" style="text-align: right">
+                        <a href="#" class="btn btn-warning">WITHDRAW</a>
+                    </div>
+                {% else %}
+                    <div data-action="draw" data-user_id="{{user.id}}" data-event_id="{{event.id}}" class="attend_btn card-body col-md-4" style="text-align: right">
+                        <a href="#" class="btn btn-dark">ATTEND NOW </a>
+                    </div>
+                {% endif %}
             {% endif %}
+
+
 
         {% endif %}
 
@@ -47,10 +57,10 @@
     <hr />
     <div class="row">
         <h6 class="text-secondary col-md-6" style="text-transform: uppercase; display: inline;">
-            {{event.author}} - {{event.date}}
+            {{event.email_username}} - {{event.date}}
         </h6>
 
-        <h6 class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
+        <h6 id="participants{{event.id}}" class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
             participants: &nbsp;{{event.participants.all.count}}
         </h6>
 
@@ -92,6 +102,8 @@
         </button>
         {% endif %}
     </span>
+
 </div>
 
 {% endblock %}
+

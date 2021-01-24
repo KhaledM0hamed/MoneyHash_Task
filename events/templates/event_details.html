@@ -11,7 +11,7 @@
         </h6>
 
         <h6 class="text-secondary col-md-6" style="text-transform: uppercase;text-align: right">
-            participants: &nbsp;654
+            participants: &nbsp;{{event.participants.all.count}}
         </h6>
         <hr />
 
@@ -26,6 +26,34 @@
         </div>
         
         {% if event.is_past_due %}
+            <div class=" card-body col-md-4 " disabled style="text-align: center">
+                <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
+            </div>
+        {% else %}
+
+            {% if not user.is_authenticated %}
+                <div class=" card-body col-md-4 " disabled style="text-align: center">
+                    <button class="btn btn-secondary"disabled>LOGIN FIRST</button>
+                </div>
+            {% else %}
+                {% if user in event.participants.all %}
+                    <div data-action="withdraw" data-user_id="{{user.id}}" data-event_id="{{event.id}}" class="attend_btn card-body col-md-4" style="text-align: center">
+                        <a href="#" class="btn btn-warning">WITHDRAW</a>
+                    </div>
+                        {% if event.author.username == user.username %}
+                            <a style="text-align: center" class="text-dark" href="{% url 'update-event' event.pk %}">UPDATE EVENT</a>
+                        {% endif %}
+                {% else %}
+                    <div data-action="draw" data-user_id="{{user.id}}" data-event_id="{{event.id}}" class="attend_btn card-body col-md-4" style="text-align: center">
+                        <a href="#" class="btn btn-dark">ATTEND NOW </a>
+                    </div>
+                    {% if event.author.username == user.username %}
+                        <a style="text-align: center" class="text-dark" href="{% url 'update-event' event.pk %}">UPDATE EVENT</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        <!-- {% if event.is_past_due %}
         <div class=" card-body justify-content-center " disabled style="text-align: center">
             <button class="btn btn-secondary"disabled>THE EVENT IS OVER</button>
         </div>
@@ -37,7 +65,7 @@
             <a class="text-dark" href="{% url 'update-event' event.pk %}">UPDATE EVENT</a>
             {% endif %}
         </div>
-        {% endif %}
+        {% endif %} -->
         
     </div>
 

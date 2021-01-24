@@ -21,6 +21,6 @@ urlpatterns = [
     path('', include('events.urls')),
     path('members/', include('django.contrib.auth.urls')),
     path('members/', include('members.urls')),
-    path('api/', include('members.url'))
+    path('api/', include('api.urls'))
 
 ]

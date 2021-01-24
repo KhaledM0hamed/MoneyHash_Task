@@ -3,17 +3,22 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import Event
 from .forms import EventForm, EventEditForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+import datetime
 
-# # Create your views here.
-# def home(request):
-#     context = {}
-#     return render(request, 'home.html', context)
 
 class HomeView(ListView):
     model = Event
     template_name = 'home.html'
     ordering = ['-date']
-    paginate_by = 5
+    paginate_by = 4
+    # queryset = Event.objects.filter(date__gte = datetime.now)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     names = []
+    #     for name in Event.objects.all():
+    #         print
+    #     context["names"] = Event.objects.all()
+    #     return context
 
 class EventDetailView(DetailView):
     model = Event
