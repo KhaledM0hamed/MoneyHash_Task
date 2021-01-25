@@ -27,10 +27,12 @@ class Event(models.Model):
         return reverse("event-details", args=[self.id])
     
     @property
+    # check if the event date is past due
     def is_past_due(self):
         return date.today() > self.date   
 
     @property
+    # Return the part of email before '@'
     def email_username(self):
         username = self.author.email.split('@')[0]
         return username

@@ -9,6 +9,8 @@ UserModel = get_user_model()
 class EmailBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         try:
+            # Login with Username or Email 
+            # You can remove 'or' condition from the next query to login with email only as required.
             user = UserModel.objects.get(
                 Q(username__iexact=username) | Q(email__iexact=username))
         except UserModel.DoesNotExist:

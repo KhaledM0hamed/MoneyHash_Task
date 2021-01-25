@@ -11,14 +11,6 @@ class HomeView(ListView):
     template_name = 'home.html'
     ordering = ['-date']
     paginate_by = 4
-    # queryset = Event.objects.filter(date__gte = datetime.now)
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     names = []
-    #     for name in Event.objects.all():
-    #         print
-    #     context["names"] = Event.objects.all()
-    #     return context
 
 class EventDetailView(DetailView):
     model = Event

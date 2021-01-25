@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required()
 def addParticipant(request, event_pk, participant_pk):
+    # Add participant to an event
     if request.method == 'POST':
         event = Event.objects.filter(id=event_pk)
         try:
@@ -18,6 +19,8 @@ def addParticipant(request, event_pk, participant_pk):
             }
 
         return JsonResponse(responseData)
+
+    # Remove participant to an event
     elif request.method == 'DELETE':
         event = Event.objects.filter(id=event_pk)
         try:
